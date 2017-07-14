@@ -3,12 +3,12 @@
 	"name": "Jobcom2cal",
 	"version": "0.0.1",
 
-	"description": "Jobcom画面にGoogle Calendarに登録するボタンを設置します。",
+	"description": "Jobcom逕ｻ髱｢縺ｫGoogle Calendar縺ｫ逋ｻ骭ｲ縺吶ｋ繝懊ち繝ｳ繧定ｨｭ鄂ｮ縺励∪縺吶�",
 
 	"permissions": [
 		"tabs",
 		"identity",
-		"http://ita.cc.*.ac.jp/emp/project/project_shift.php"
+		"http://ita.cc.aoyama.ac.jp/emp/*",
 		"http://www.google.com/*",
 		"https://www.google.com/*",
 		"https://www.googleapis.com/*",
@@ -17,8 +17,8 @@
 
 	"content_scripts": [
 		{
-			"mataches": ["http://ita.cc.*.ac.jp/emp/project/project_shift.php"],
-			"js": ["main.js"]
+			"matches": ["http://ita.cc.aoyama.ac.jp/emp/*"],
+			"js": ["jquery-3.2.1.min.js", "main.js"]
 		}
 	]
 }
