@@ -1,7 +1,7 @@
 {
 	"manifest_version": 2,
 	"name": "Jobcom2cal",
-	"version": "0.0.1",
+	"version": "1.0.0",
 
 	"description": "Jobcom画面にGoogle Calendarに登録するボタンを設置します。",
 
@@ -20,5 +20,16 @@
 			"matches": ["http://ita.cc.aoyama.ac.jp/emp/*"],
 			"js": ["jquery-3.2.1.min.js", "main.js"]
 		}
-	]
+	],
+
+	"background": {
+		"scripts" : ["jquery-3.2.1.min.js", "background.js"]
+	},
+
+	"oauth2" : {
+    "client_id" : "840352718313-0ap884heneocsqsd9ctitu5oj20oaaqp.apps.googleusercontent.com",
+    "scopes" : [
+      "https://www.googleapis.com/auth/calendar"
+    ]
+  }
 }
