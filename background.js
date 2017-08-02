@@ -4,12 +4,12 @@ chrome.runtime.onMessage.addListener(function(request){
       if(chrome.runtime.lastError){
         showStatus(chrome.runtime.lastError);
       } else {
-        insertToCalendar(token, request, showStatus);
+        insertToCalendar(token, request);
       }
     });
 });
 
-function insertToCalendar(token, request, callback){
+function insertToCalendar(token, request){
   const URL = 'https://www.googleapis.com/calendar/v3/calendars/primary/events';
   $.ajax({
     type: 'POST',
@@ -22,14 +22,14 @@ function insertToCalendar(token, request, callback){
     },
     contentType: 'application/json'
   }).done(function(){
-    callback('success');
+    showStatus('success');
   }).fail(function(xhr){
     if(xhr.status === 401) {
       chrome.identity.removeCachedAuthToken(
         {'token' : token}
       );
     }
-    callback(xhr.status);
+    showStatus(xhr.status);
   });
 }
 
