@@ -4,8 +4,7 @@ chrome.runtime.onMessage.addListener(function(request){
       if(chrome.runtime.lastError){
         showStatus(chrome.runtime.lastError);
       } else {
-        //insertToCalendar(token, request, showStatus);
-        showStatus('success');
+        insertToCalendar(token, request, showStatus);
       }
     });
 });
