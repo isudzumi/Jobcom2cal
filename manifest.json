@@ -1,7 +1,7 @@
 {
 	"manifest_version": 2,
 	"name": "Jobcom2cal",
-	"version": "1.2.0",
+	"version": "1.2.1",
 
 	"description": "Jobcom画面にGoogle Calendarに登録するボタンを設置します。",
 

@@ -1,21 +1,3 @@
-class StatusAlert {
-	constructor() {
-		this.count = 0;
-	}
-	counter(){
-		this.count++;
-	}
-	success(){
-		this.counter();
-		this.message = 'カレンダーに登録しました';
-	}
-	fail(text){
-		this.counter();
-		this.message = 'ERROR : ' + text;
-	}
-}
-
-let count = new StatusAlert();
 
 $(function(){
 
@@ -35,7 +17,7 @@ function getLinks() {
 		getData(shiftId);
 		size++;
 	});
-	count.size = size;
+	compareSize.size = size;
 }
 
 function getData(link) {
@@ -71,14 +53,31 @@ function getJobDescription(data) {
 	chrome.runtime.sendMessage(JSON.stringify(request));
 }
 
+let compareSize = {
+	size: 0,
+	count: 0,
+	compare: function() {
+		if (this.count == this.size) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+};
+
+function showAlert(message) {
+	if( message === 'success' ) {
+		message = 'カレンダーに登録しました';
+	} else {
+		message = 'ERROR : ' + message;
+	}
+	alert(message);
+}
+
 chrome.extension.onRequest.addListener(function(response){
 	response = JSON.parse(response);
-	if(response.message === 'success') {
-		count.success();
-	} else {
-		count.fail(response.message);
-	}
-	if(count.count == count.size){
-		alert( count.message );
+	compareSize.count++;
+	if(compareSize.compare()) {
+		showAlert(response.message);
 	}
 })
