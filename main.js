@@ -1,24 +1,4 @@
-
-$(function(){
-
-	if(location.pathname == "/emp/project/project_shift.php") {
-		//set button to the page.
-		$("div").append('<div style="margin:0 5%"><div align="left"><button>Googleカレンダーに追加</button></div></div>');
-		$("button").click(function(){
-			getLinks();
-		});
-	}
-});
-
-function getLinks() {
-	let size = 0;
-	$("table:eq(1) tr:gt(1)").find("td:eq(2) > a").each(function(){
-		let shiftId = $(this).attr("href").substring(23, 57);
-		getData(shiftId);
-		size++;
-	});
-	compareSize.size = size;
-}
+const link = (href) => href.attr("href").substring(23, 57);
 
 function getData(link) {
 	$.ajax({
@@ -26,13 +6,14 @@ function getData(link) {
 		url : link,
 		timeout: 10000
 	}).done(function(data){
-		getJobDescription(data);
+		const request = makeRequest(data);
+		chrome.runtime.sendMessage(JSON.stringify(request));
 	}).fail(function(){
 		alert("error");
 	});
 }
 
-function getJobDescription(data) {
+function makeRequest(data) {
 	let date = data.match(/\d{4}\/\d{2}\/\d{2}/g);
 	date = date.toString().replace(/\//g, "-");
 	let timeAry = data.match(/\d{2}:\d{2}/g);
@@ -50,8 +31,27 @@ function getJobDescription(data) {
 			"timeZone" : "Asia/Tokyo",
 		}
 	}
-	chrome.runtime.sendMessage(JSON.stringify(request));
+	return request;
 }
+
+function setToCalendar() {
+	let size = 0;
+	$("table:eq(1) tr:gt(1)").find("td:eq(2) > a").each(function(){
+		getData(link($(this)));
+		size++;
+	});
+	compareSize.size = size;
+}
+
+$(function(){
+	if(location.pathname == "/emp/project/project_shift.php") {
+		//set button to the page.
+		$("div").append('<div style="margin:0 5%"><div align="left"><button>Googleカレンダーに追加</button></div></div>');
+		$("button").click(function(){
+			setToCalendar();
+		});
+	}
+});
 
 let compareSize = {
 	size: 0,
